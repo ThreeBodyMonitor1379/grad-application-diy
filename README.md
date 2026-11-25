@@ -2,7 +2,7 @@
 
 一套给第一次自己申请香港、新加坡授课型硕士的人用的中文 Codex 技能。你在同一条对话里选项目、核材料、跟进补件和读录取信。普通国内本科与中外合办双学籍各有自己的填表路线。
 
-**稳定版：[`v1.1.1`](https://github.com/ThreeBodyMonitor1379/grad-application-diy/tree/v1.1.1)** · [版本差异](https://github.com/ThreeBodyMonitor1379/grad-application-diy/compare/v1.1.0...v1.1.1) · [新手手册](./payload/从这里开始.md) · [安装测试](https://github.com/ThreeBodyMonitor1379/grad-application-diy/actions/workflows/install.yml)
+**稳定版：[`v1.2.0`](https://github.com/ThreeBodyMonitor1379/grad-application-diy/tree/v1.2.0)** · [版本差异](https://github.com/ThreeBodyMonitor1379/grad-application-diy/compare/v1.1.1...v1.2.0) · [新手手册](./payload/从这里开始.md) · [CV／PS 下载指令](./payload/WRITING-SKILLS.md) · [安装测试](https://github.com/ThreeBodyMonitor1379/grad-application-diy/actions/workflows/install.yml)
 
 > [!IMPORTANT]
 > 两校注册不等于两个学位。按注册证明核学籍，按授位材料核学位；学校只出具在读证明时，不把合作院校的 GPA 填进去。[双学籍填表指南](./payload/skills/grad-application-packet-audit/双学籍填表指南.md)列出了两条路线及需要问学校的例外。
@@ -13,10 +13,25 @@
 > 在能保存文件的 Codex 对话中发送下面这一句。Codex 负责安装；你不用开终端、手选技能或另开对话。
 
 ```text
-请按 https://raw.githubusercontent.com/ThreeBodyMonitor1379/grad-application-diy/v1.1.1/CODEX-START.md 在当前工作区建好我的研究生申请项目、安装项目专用技能，然后留在这条对话里一步步带我规划和推进申请，不用我运行命令。
+请按 https://raw.githubusercontent.com/ThreeBodyMonitor1379/grad-application-diy/v1.2.0/CODEX-START.md 在当前工作区建好我的研究生申请项目、安装项目专用技能，然后留在这条对话里一步步带我规划和推进申请，不用我运行命令。
 ```
 
 第一问是：「你的本科属于普通国内本科、中外合办（可能有双学籍），还是暂时不确定？」可以直接答「两校都注册了，但我不知道最后发几个学位证」。助手会把已确认的事实和尚待查证的下一步分开记入个人计划。以后说「继续」即可。如果工作区不可写或无法联网，助手会说明卡在哪一步。
+
+## 要写 CV 或 PS？
+
+基础安装只装 4 个申请规划技能。需要文书时，在原对话说「只安装 CV 写作技能」「只安装 PS 写作技能」或「CV 和 PS 都装」。也可以把这个要求加在上面的建项指令末尾，一次完成。老版本项目或新对话可复制[自带下载地址的三条指令](./payload/WRITING-SKILLS.md)。
+
+两套写作技能仍分别从 [CV 独立库（7 项）](https://github.com/ThreeBodyMonitor1379/Academic-application-CV/tree/v0.2.0)和 [PS 独立库（3 项）](https://github.com/ThreeBodyMonitor1379/Academic-application-PS/tree/v0.2.0)取得。本仓库不合并或替代原库，只把你选的包装进当前申请项目。
+
+<details>
+<summary><strong>还没有申请项目？复制这一句，同时建项目、装 CV 和 PS</strong></summary>
+
+```text
+请按 https://raw.githubusercontent.com/ThreeBodyMonitor1379/grad-application-diy/v1.2.0/CODEX-START.md 建好我的研究生申请项目，同时安装 CV 和 PS 两套项目专用写作技能，分别核验后留在本对话继续规划。
+```
+
+</details>
 
 ## 先选入口
 

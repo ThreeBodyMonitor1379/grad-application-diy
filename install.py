@@ -14,8 +14,8 @@ SKILLS = ("grad-application-roadmap", "grad-application-packet-audit",
           "grad-application-follow-up", "grad-offer-review")
 FORMS = ("项目要求", "事实与证据", "提交前核对", "提交后待办")
 STAMP = ".application-agent/version"
-EDITION = "grad-application-diy/v1.1.1\n"
-KNOWN_STAMPS = {EDITION.encode(), b"grad-application-diy/v1.1.0\n", b"grad-application-diy/v1.0.0\n"}
+EDITION = "grad-application-diy/v1.2.0\n"
+KNOWN_STAMPS = {EDITION.encode(), b"grad-application-diy/v1.1.1\n", b"grad-application-diy/v1.1.0\n", b"grad-application-diy/v1.0.0\n"}
 
 
 def copy(source, destination):
@@ -34,6 +34,7 @@ def build(stage):
     for form in FORMS:
         copy(SOURCE / "模板" / (form + ".md"), work / (form + ".md"))
     copy(BASE / "starter" / "申请计划.md", work / "申请计划.md")
+    copy(SOURCE / "WRITING-SKILLS.md", guide / "WRITING-SKILLS.md")
     for skill in SKILLS:
         dest = stage / ".agents" / "skills" / skill
         dest.mkdir(parents=True)
@@ -67,6 +68,8 @@ def is_installed(dest):
                 ".application-agent/开场.txt", ".application-agent/logs/工作记录.md",
                 ".agents/skills/grad-application-packet-audit/双学籍填表指南.md"]
     required.extend(".agents/skills/" + skill + "/SKILL.md" for skill in SKILLS)
+    if marker.read_bytes() == EDITION.encode():
+        required.append("使用手册/WRITING-SKILLS.md")
     for entry in required:
         member = dest / entry
         if member.resolve() != member or not member.is_file():
