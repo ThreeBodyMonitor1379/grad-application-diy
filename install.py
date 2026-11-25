@@ -14,8 +14,8 @@ SKILLS = ("grad-application-roadmap", "grad-application-packet-audit",
           "grad-application-follow-up", "grad-offer-review")
 FORMS = ("项目要求", "事实与证据", "提交前核对", "提交后待办")
 STAMP = ".application-agent/version"
-EDITION = "grad-application-diy/v1.1.0\n"
-PREVIOUS = "grad-application-diy/v1.0.0\n"
+EDITION = "grad-application-diy/v1.1.1\n"
+KNOWN_STAMPS = {EDITION.encode(), b"grad-application-diy/v1.1.0\n", b"grad-application-diy/v1.0.0\n"}
 
 
 def copy(source, destination):
@@ -61,7 +61,7 @@ def is_installed(dest):
     marker = dest / STAMP
     if (dest.is_symlink() or marker.parent.is_symlink() or marker.is_symlink()
             or not marker.is_file() or marker.stat().st_size != len(EDITION)
-            or marker.read_bytes() not in (EDITION.encode(), PREVIOUS.encode())):
+            or marker.read_bytes() not in KNOWN_STAMPS):
         return False
     required = ["先读我.md", "启动对话.command", "AGENTS.md", "使用手册/从这里开始.md", "使用手册/双学籍填表指南.md",
                 ".application-agent/开场.txt", ".application-agent/logs/工作记录.md",

@@ -5,8 +5,8 @@
 ## 在项目内安装
 
 1. 确定本对话实际可写的工作区。默认目标是其下的「我的研究生申请」，不要改全局配置。如果当前目录本身就是已装好的项目（含 `.application-agent/version`），目标取当前目录本身，不套娃；安装器从临时源码目录运行。若根本没有可写工作区，只请用户在 Codex 选择一个可写文件夹。不要找寻或扫描其他申请人的材料。
-2. 从公共仓库 `https://github.com/ThreeBodyMonitor1379/grad-application-diy.git` 获取固定标签 `v1.1.0` 到独立临时目录。先阅读安装器；在该源码目录用 Python 3.8+ 执行 `python3 -I -B install.py --in-chat "<目标的绝对路径>"`（Windows 有 Python 启动器时可用 `py -3`）。这不是发给使用者照做的命令。不要调用 `启动对话.command`、`codex app` 或任何新会话，不启动子代理代替用户进行规划。
-3. 没有 Git 时可以下载该标签的[源码 ZIP](https://github.com/ThreeBodyMonitor1379/grad-application-diy/archive/refs/tags/v1.1.0.zip)到临时目录。环境不许联网或不许写入时，只请求本次访问公开源码或目标目录所需的权限。若仍不可用，说明具体阻塞，不宣称已安装、不要求使用者运行终端命令。目标同名且不是我们的空项目时，不清空、不合并，询问是否另用一个新目录。
+2. 从公共仓库 `https://github.com/ThreeBodyMonitor1379/grad-application-diy.git` 获取固定标签 `v1.1.1` 到独立临时目录。先阅读安装器；在该源码目录用 Python 3.8+ 执行 `python3 -I -B install.py --in-chat "<目标的绝对路径>"`（Windows 有 Python 启动器时可用 `py -3`）。这不是发给使用者照做的命令。不要调用 `启动对话.command`、`codex app` 或任何新会话，不启动子代理代替用户进行规划。
+3. 没有 Git 时可以下载该标签的[源码 ZIP](https://github.com/ThreeBodyMonitor1379/grad-application-diy/archive/refs/tags/v1.1.1.zip)到临时目录。环境不许联网或不许写入时，只请求本次访问公开源码或目标目录所需的权限。若仍不可用，说明具体阻塞，不宣称已安装、不要求使用者运行终端命令。目标同名且不是我们的空项目时，不清空、不合并，询问是否另用一个新目录。
 4. 安装成功后，实际读取目标的 `AGENTS.md` 与 `.agents/skills/grad-application-roadmap/SKILL.md`，检查四个不同技能目录下的 `SKILL.md` 和 `我的申请/申请计划.md`、四张工作表、`.application-agent/logs/工作记录.md` 均可读。已在父目录开启的对话可能没有自动载入子目录技能，直接按绝对路径读取即可；不要求重启或全局安装。后续只使用这一个目标项目。
 
 ## 留在这里继续
