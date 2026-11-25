@@ -14,7 +14,8 @@ SKILLS = ("grad-application-roadmap", "grad-application-packet-audit",
           "grad-application-follow-up", "grad-offer-review")
 FORMS = ("项目要求", "事实与证据", "提交前核对", "提交后待办")
 STAMP = ".application-agent/version"
-EDITION = "grad-application-diy/v1.0.0\n"
+EDITION = "grad-application-diy/v1.1.0\n"
+PREVIOUS = "grad-application-diy/v1.0.0\n"
 
 
 def copy(source, destination):
@@ -32,6 +33,7 @@ def build(stage):
         directory.mkdir(parents=True, exist_ok=True)
     for form in FORMS:
         copy(SOURCE / "模板" / (form + ".md"), work / (form + ".md"))
+    copy(BASE / "starter" / "申请计划.md", work / "申请计划.md")
     for skill in SKILLS:
         dest = stage / ".agents" / "skills" / skill
         dest.mkdir(parents=True)
@@ -59,7 +61,7 @@ def is_installed(dest):
     marker = dest / STAMP
     if (dest.is_symlink() or marker.parent.is_symlink() or marker.is_symlink()
             or not marker.is_file() or marker.stat().st_size != len(EDITION)
-            or marker.read_bytes() != EDITION.encode()):
+            or marker.read_bytes() not in (EDITION.encode(), PREVIOUS.encode())):
         return False
     required = ["先读我.md", "启动对话.command", "AGENTS.md", "使用手册/从这里开始.md", "使用手册/双学籍填表指南.md",
                 ".application-agent/开场.txt", ".application-agent/logs/工作记录.md",
@@ -72,12 +74,13 @@ def is_installed(dest):
     return True
 
 
-def install(raw):
+def install(raw, in_chat=False):
     if not raw.strip() or Path(raw).name in ("", "..") or any(c in raw for c in "\r\n\x00"):
         raise ValueError("请指定一个新的项目文件夹名称。")
     path = Path(raw).expanduser()
     dest = path.parent.resolve(strict=True) / path.name
-    if dest.is_symlink() or dest == Path.home().resolve() or dest == Path.cwd().resolve() or dest == BASE or BASE in dest.parents:
+    if (dest.is_symlink() or dest == Path.home().resolve() or dest == BASE or BASE in dest.parents
+            or (dest == Path.cwd().resolve() and not (in_chat and is_installed(dest)))):
         raise ValueError("请选择独立的项目子目录，不要选择主目录、当前目录、安装包内目录或符号链接。")
     if dest.exists():
         if is_installed(dest):
@@ -101,13 +104,43 @@ def install(raw):
 
 def main():
     parser = argparse.ArgumentParser(description="创建一份空白的本地研究生申请项目。")
-    parser.add_argument("--no-chat", action="store_true", help="只建目录，不启动 Codex")
-    parser.add_argument("directory", nargs="?", default=str(Path.home() / "我的研究生申请"))
+    modes = parser.add_mutually_exclusive_group()
+    modes.add_argument("--no-chat", action="store_true", help="只建目录，不启动 Codex")
+    modes.add_argument("--in-chat", action="store_true", help="在调用方的现有 Codex 对话中继续规划")
+    parser.add_argument("directory", nargs="?")
     args = parser.parse_args()
     os.umask(0o077)
-    dest, fresh = install(args.directory)
+    raw = args.directory
+    if raw is None:
+        parent = Path.cwd() if args.in_chat else Path.home()
+        raw = str(parent if args.in_chat and is_installed(parent) else parent / "我的研究生申请")
+    dest, fresh = install(raw, in_chat=args.in_chat)
     print(("项目已创建：" if fresh else "项目已经存在，保留全部原文件：") + str(dest), flush=True)
     print("入口：" + str(dest / "先读我.md"), flush=True)
+    if args.in_chat:
+        # Keep old personal work untouched. Add the newly introduced blank plan only
+        # if absent, using an atomic exclusive link (also safe for concurrent retries).
+        work = dest / "我的申请"
+        plan = work / "申请计划.md"
+        if not work.is_dir() or work.is_symlink() or plan.is_symlink():
+            raise ValueError("计划目录不完整或含符号链接；未改动个人资料。")
+        for form in FORMS:
+            member = work / (form + ".md")
+            if member.is_symlink() or not member.is_file():
+                raise ValueError("申请工作表不完整；未改动个人资料。")
+        if not plan.exists():
+            with tempfile.TemporaryDirectory(prefix=".grad-plan-", dir=str(work)) as temp:
+                candidate = Path(temp) / "plan"
+                copy(BASE / "starter" / "申请计划.md", candidate)
+                try:
+                    os.link(candidate, plan)
+                except FileExistsError:
+                    pass
+        if plan.is_symlink() or not plan.is_file():
+            raise ValueError("申请计划不是普通文件；未改动个人资料。")
+        print("留在当前对话，读取项目规则和立项技能；个人计划：" + str(plan))
+        print("新项目首问：你的本科属于普通国内本科、中外合办（可能有双学籍），还是暂时不确定？已有回答就从未完成事项继续。")
+        return
     if not fresh or args.no_chat:
         print("本次未启动对话。需要时运行项目中的「启动对话.command」。")
         return

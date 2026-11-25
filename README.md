@@ -1,34 +1,28 @@
 # 港新研究生申请 DIY 工具包
 
-复制一条命令，你会得到自己的空白申请文件夹。第一次对话先问你是普通国内本科、中外合办，还是暂不确定。已有两校学籍也不意味着要填两项学位；工具包会带你分别核对学籍、授位和成绩来源。
+打开一个可以保存文件的 Codex 对话，把下面这句话复制进去。安装、建项目和接下来的申请规划都在这条对话里完成。
 
-## 安装
-
-在 Mac「终端」、Linux 终端或 Windows 的 WSL 终端粘贴下面一整行，按回车。需要 Git 和 Python 3.8+；不需要管理员权限、GitHub 账号或第三方 Python 包。原生 Windows PowerShell 不适用。
-
-```sh
-(d=$(mktemp -d) && git -c advice.detachedHead=false clone -q --depth 1 --branch v1.0.0 https://github.com/ThreeBodyMonitor1379/grad-application-diy.git "$d/kit" && sh "$d/kit/install.sh")
+```text
+请按 https://raw.githubusercontent.com/ThreeBodyMonitor1379/grad-application-diy/v1.1.0/CODEX-START.md 在当前工作区建好我的研究生申请项目、安装项目专用技能，然后留在这条对话里一步步带我规划和推进申请，不用我运行命令。
 ```
 
-项目默认放在个人主目录的「我的研究生申请」下，终端会打印完整路径。已安装并登录 Codex CLI，就在这个文件夹自动进入新对话。首次登录或信任目录的提示由你自己确认。Mac 上只有 Codex 桌面端时，安装器会请求打开预填好的新对话，你还要点一次发送。没有 Codex 也能安装和阅读手册。安装器不替你安装软件、不上传材料、不代交申请。
+第一次，Codex 会问你的本科属于普通国内本科、中外合办，还是暂时不确定。你直接回答，例如「我是中外合办，两校都注册了，但不知道最后发几个学位证」。它会把已确认的情况和今天要做的事写进「我的申请／申请计划.md」。下次说「继续」就能接着推进。你不必开终端、手选技能或再开对话；如果 Codex 没有联网或文件夹权限，它会告诉你需要允许哪一步。
 
-没用过终端的 Mac 用户，可以[下载 v1.0.0 ZIP](https://github.com/ThreeBodyMonitor1379/grad-application-diy/archive/refs/tags/v1.0.0.zip)，解压，再双击「安装.command」。若系统阻止运行，请不要关闭系统安全保护；可改用上面的终端命令，或直接阅读手册。
-
-想先看内容？直接读[新手手册](payload/从这里开始.md)或[双学籍填表指南](payload/skills/grad-application-packet-audit/双学籍填表指南.md)。不想开对话，可在上面命令的 `install.sh"` 后、右括号前加 ` --no-chat`。下载了源码 ZIP 的使用者也可在解压后的目录运行 `sh install.sh --no-chat`。
+想先看看这套方法？可以直接读[新手手册](payload/从这里开始.md)或[双学籍填表指南](payload/skills/grad-application-packet-audit/双学籍填表指南.md)。两校注册不一定有两个学位；填几条学籍、填几项资格要分开判断。
 
 ## 安装后只看这三处
 
 | 入口 | 用途 |
 |---|---|
-| 先读我 | 打开第一张表，或启动对话 |
-| 我的申请 | 你填写的四张表、材料原件、文书草稿、提交回执 |
+| 先读我 | 打开自己的计划，回到刚才的对话继续 |
+| 我的申请 | 申请计划、四张工作表、材料原件、文书草稿、提交回执 |
 | 使用手册 | 从选校到录取的步骤；普通本科与中外合办的区别 |
 
 技能在项目的 `.agents/skills/`，安装标记和工作记录在 `.application-agent/`；根目录的 `AGENTS.md` 只负责给助手指路。不会修改全局技能，也不会给个人项目配置 GitHub 远端。普通文件可在本机直接阅读；隐藏目录并非加密，个人项目切勿公开上传。公开仓库只分发匿名手册、空白模板、项目技能和安装测试。
 
 ## 换目录、重试与验证
 
-在源码目录运行 `sh install.sh --no-chat "/已有父目录/新项目名"` 可选目录，父目录须存在。再次安装会保留已经填写的材料，不重复开启对话；需要新对话时打开项目里的「启动对话.command」。别的非空目录不会被覆盖。若个人项目曾被手动删去关键文件，请在新位置重装，再复制自己的表单和材料；不需要先删旧目录。
+日常使用直接和 Codex 说话。[给助手的安装步骤](CODEX-START.md)说明了如何在原对话续办、回读技能和更新计划。再次安装会保留已经填写的材料。遇到同名的非空目录，助手会先问你是否换一个位置。手动安装仍可在源码目录运行 `sh install.sh --no-chat "/已有父目录/新项目名"`，但这不是使用者必须做的步骤。
 
 只下载过工具包、没有登录 Codex 的人，也能运行 `python3 -B -m unittest discover -s tests -v` 做离线验收。用例只建临时项目。公开仓库的 [Actions](https://github.com/ThreeBodyMonitor1379/grad-application-diy/actions/workflows/install.yml) 分别在 macOS 和 Ubuntu 上运行；它们不会登录账号或发送模型请求。
 
