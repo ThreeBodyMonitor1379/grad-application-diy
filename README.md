@@ -1,4 +1,4 @@
-# Graduate Application DIY Skills
+# Graduate Application DIY Skills研究生申请DIY工具包
 
 一套给第一次自己申请香港、新加坡授课型硕士的人用的中文 Codex 技能。你在同一条对话里选项目、核材料、跟进补件和读录取信。普通国内本科与中外合办双学籍各有自己的填表路线。
 
