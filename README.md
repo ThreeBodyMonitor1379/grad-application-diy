@@ -1,39 +1,23 @@
 # Graduate Application DIY Skills研究生申请DIY工具包
 
-一套给第一次自己申请香港、新加坡授课型硕士的人用的中文 Codex 技能。你在同一条对话里选项目、核材料、跟进补件和读录取信。普通国内本科与中外合办双学籍各有自己的填表路线。
+## 从零开始：复制这一句给 Codex
 
-**稳定版：[`v1.2.0`](https://github.com/ThreeBodyMonitor1379/grad-application-diy/tree/v1.2.0)** · [版本差异](https://github.com/ThreeBodyMonitor1379/grad-application-diy/compare/v1.1.1...v1.2.0) · [新手手册](./payload/从这里开始.md) · [CV／PS 下载指令](./payload/WRITING-SKILLS.md) · [安装测试](https://github.com/ThreeBodyMonitor1379/grad-application-diy/actions/workflows/install.yml)
+在能保存文件的 Codex 对话里发送下面这一句，不用开终端：
+
+```text
+请按 https://raw.githubusercontent.com/ThreeBodyMonitor1379/grad-application-diy/v1.2.0/CODEX-START.md 在当前工作区创建空白研究生申请项目，安装项目专用的规划技能和 CV、PS 两套写作技能，逐项核验后留在本对话，从询问我的本科背景开始规划申请，暂不写文书。
+```
+
+装好后，你会在这条对话里看到个人计划的入口，以及第一个问题：「你的本科属于普通国内本科、中外合办（可能有双学籍），还是暂时不确定？」不知道是否有两个学位也可以先答「不确定」。以后回到这条对话，说「继续」就能接着上次的待办。
+
+这套工具面向第一次自己申请香港、新加坡授课型硕士的人。完整安装包含 4 个规划技能、7 个 CV 技能和 3 个 PS 技能，都放在你的申请项目里。如果工作区不可写或无法联网，Codex 会告诉你哪一步没完成。
+
+[新手手册](./payload/从这里开始.md) · [稳定版 v1.2.0](https://github.com/ThreeBodyMonitor1379/grad-application-diy/tree/v1.2.0) · [版本差异](https://github.com/ThreeBodyMonitor1379/grad-application-diy/compare/v1.1.1...v1.2.0) · [安装测试](https://github.com/ThreeBodyMonitor1379/grad-application-diy/actions/workflows/install.yml)
 
 > [!IMPORTANT]
 > 两校注册不等于两个学位。按注册证明核学籍，按授位材料核学位；学校只出具在读证明时，不把合作院校的 GPA 填进去。[双学籍填表指南](./payload/skills/grad-application-packet-audit/双学籍填表指南.md)列出了两条路线及需要问学校的例外。
 
-## 🚀 懒人指令｜整句复制给 Codex（推荐）
-
-> [!TIP]
-> 在能保存文件的 Codex 对话中发送下面这一句。Codex 负责安装；你不用开终端、手选技能或另开对话。
-
-```text
-请按 https://raw.githubusercontent.com/ThreeBodyMonitor1379/grad-application-diy/v1.2.0/CODEX-START.md 在当前工作区建好我的研究生申请项目、安装项目专用技能，然后留在这条对话里一步步带我规划和推进申请，不用我运行命令。
-```
-
-第一问是：「你的本科属于普通国内本科、中外合办（可能有双学籍），还是暂时不确定？」可以直接答「两校都注册了，但我不知道最后发几个学位证」。助手会把已确认的事实和尚待查证的下一步分开记入个人计划。以后说「继续」即可。如果工作区不可写或无法联网，助手会说明卡在哪一步。
-
-## 要写 CV 或 PS？
-
-基础安装只装 4 个申请规划技能。需要文书时，在原对话说「只安装 CV 写作技能」「只安装 PS 写作技能」或「CV 和 PS 都装」。也可以把这个要求加在上面的建项指令末尾，一次完成。老版本项目或新对话可复制[自带下载地址的三条指令](./payload/WRITING-SKILLS.md)。
-
-两套写作技能仍分别从 [CV 独立库（7 项）](https://github.com/ThreeBodyMonitor1379/Academic-application-CV/tree/v0.2.0)和 [PS 独立库（3 项）](https://github.com/ThreeBodyMonitor1379/Academic-application-PS/tree/v0.2.0)取得。本仓库不合并或替代原库，只把你选的包装进当前申请项目。
-
-<details>
-<summary><strong>还没有申请项目？复制这一句，同时建项目、装 CV 和 PS</strong></summary>
-
-```text
-请按 https://raw.githubusercontent.com/ThreeBodyMonitor1379/grad-application-diy/v1.2.0/CODEX-START.md 建好我的研究生申请项目，同时安装 CV 和 PS 两套项目专用写作技能，分别核验后留在本对话继续规划。
-```
-
-</details>
-
-## 先选入口
+## 规划开始后，可以让 Codex 做什么？
 
 | 你的情况 | 使用的 skill | 得到什么 |
 |---|---|---|
@@ -60,6 +44,30 @@
 | 使用手册 | 从选校到录取的步骤；普通本科与中外合办的区别 |
 
 技能在项目的 `.agents/skills/`，工作记录在 `.application-agent/`，根目录的 `AGENTS.md` 给助手指路。不会改全局技能，也不为个人项目设置 GitHub 远端。隐藏目录没有加密；不要把填好的个人项目推到公开仓库。公开仓库只分发匿名手册、空白模板、项目技能及安装测试。
+
+## 按需安装（可选）
+
+如果已经用了页首的完整指令，可以跳过这一节。只需要部分技能时，把对应的一句发给 Codex。
+
+只建项目和安装规划技能：
+
+```text
+请按 https://raw.githubusercontent.com/ThreeBodyMonitor1379/grad-application-diy/v1.2.0/CODEX-START.md 在当前工作区创建空白研究生申请项目，只安装规划技能，留在本对话开始规划。
+```
+
+已有申请项目，只补 CV（学术简历）：
+
+```text
+请按 https://raw.githubusercontent.com/ThreeBodyMonitor1379/grad-application-diy/v1.2.0/payload/WRITING-SKILLS.md 只安装 CV 写作技能到我的申请项目，核验后在本对话告诉我写简历第一步需要什么。
+```
+
+已有申请项目，只补 PS（个人陈述／SOP）：
+
+```text
+请按 https://raw.githubusercontent.com/ThreeBodyMonitor1379/grad-application-diy/v1.2.0/payload/WRITING-SKILLS.md 只安装 PS 写作技能到我的申请项目，核验后在本对话先问我要申请项目的文书题目。
+```
+
+老项目想一次补齐两套，可用[写作技能指南里的「两套一起装」](./payload/WRITING-SKILLS.md)。两套技能仍由 [CV 独立库](https://github.com/ThreeBodyMonitor1379/Academic-application-CV/tree/v0.2.0)和 [PS 独立库](https://github.com/ThreeBodyMonitor1379/Academic-application-PS/tree/v0.2.0)分别维护。
 
 ## 手动安装与验证
 
