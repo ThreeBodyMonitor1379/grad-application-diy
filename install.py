@@ -1,0 +1,127 @@
+"""Build a new, local project. No network or user account is needed here."""
+import argparse
+import errno
+import os
+from pathlib import Path
+import shutil
+import sys
+import tempfile
+
+
+BASE = Path(__file__).resolve().parent
+SOURCE = BASE / "payload"
+SKILLS = ("grad-application-roadmap", "grad-application-packet-audit",
+          "grad-application-follow-up", "grad-offer-review")
+FORMS = ("项目要求", "事实与证据", "提交前核对", "提交后待办")
+STAMP = ".application-agent/version"
+EDITION = "grad-application-diy/v1.0.0\n"
+
+
+def copy(source, destination):
+    if not source.is_file() or source.is_symlink() or BASE not in source.resolve().parents:
+        raise ValueError("安装包不完整或含意外链接：" + source.name)
+    shutil.copyfile(str(source), str(destination))
+
+
+def build(stage):
+    work = stage / "我的申请"
+    guide = stage / "使用手册"
+    sysdir = stage / ".application-agent"
+    for directory in (work, guide, work / "材料原件", work / "文书草稿",
+                      work / "提交与回执", sysdir / "logs"):
+        directory.mkdir(parents=True, exist_ok=True)
+    for form in FORMS:
+        copy(SOURCE / "模板" / (form + ".md"), work / (form + ".md"))
+    for skill in SKILLS:
+        dest = stage / ".agents" / "skills" / skill
+        dest.mkdir(parents=True)
+        copy(SOURCE / "skills" / skill / "SKILL.md", dest / "SKILL.md")
+    special = Path("skills/grad-application-packet-audit/双学籍填表指南.md")
+    for out in (guide / special.name, stage / ".agents" / special):
+        copy(SOURCE / special, out)
+    # Rebase the source handout's repository links to the reader's working copies.
+    dest = guide / "从这里开始.md"
+    copy(SOURCE / dest.name, dest)
+    handout = dest.read_text(encoding="utf-8")
+    dest.write_text(handout.replace("](" + special.as_posix() + ")", "](" + special.name + ")")
+                    .replace("](模板/", "](../我的申请/").replace("](skills/", "](../.agents/skills/"),
+                    encoding="utf-8")
+    for name in ("先读我.md", "AGENTS.md", "启动对话.command"):
+        copy(BASE / "starter" / name, stage / name)
+    copy(BASE / "starter" / "开场.txt", sysdir / "开场.txt")
+    (stage / "启动对话.command").chmod(0o700)
+    (sysdir / "logs/工作记录.md").write_text("# 项目工作记录\n\n安装完成；尚未录入申请资料。\n", encoding="utf-8")
+    (stage / STAMP).write_text(EDITION, encoding="utf-8")
+    (stage / ".gitignore").write_text("# Personal application workspace: keep all files local.\n*\n", encoding="utf-8")
+
+
+def is_installed(dest):
+    marker = dest / STAMP
+    if (dest.is_symlink() or marker.parent.is_symlink() or marker.is_symlink()
+            or not marker.is_file() or marker.stat().st_size != len(EDITION)
+            or marker.read_bytes() != EDITION.encode()):
+        return False
+    required = ["先读我.md", "启动对话.command", "AGENTS.md", "使用手册/从这里开始.md", "使用手册/双学籍填表指南.md",
+                ".application-agent/开场.txt", ".application-agent/logs/工作记录.md",
+                ".agents/skills/grad-application-packet-audit/双学籍填表指南.md"]
+    required.extend(".agents/skills/" + skill + "/SKILL.md" for skill in SKILLS)
+    for entry in required:
+        member = dest / entry
+        if member.resolve() != member or not member.is_file():
+            raise ValueError("现有安装不完整。原文件已保留；请另选空目录安装，再复制个人资料。")
+    return True
+
+
+def install(raw):
+    if not raw.strip() or Path(raw).name in ("", "..") or any(c in raw for c in "\r\n\x00"):
+        raise ValueError("请指定一个新的项目文件夹名称。")
+    path = Path(raw).expanduser()
+    dest = path.parent.resolve(strict=True) / path.name
+    if dest.is_symlink() or dest == Path.home().resolve() or dest == Path.cwd().resolve() or dest == BASE or BASE in dest.parents:
+        raise ValueError("请选择独立的项目子目录，不要选择主目录、当前目录、安装包内目录或符号链接。")
+    if dest.exists():
+        if is_installed(dest):
+            return dest, False
+        if not dest.is_dir() or any(dest.iterdir()):
+            raise ValueError("目标不是空目录；未改动原有文件，请另选目录。")
+    # Stage on the same filesystem: interrupted builds never expose half a project.
+    # POSIX rename replaces an empty directory, never a non-empty competing one.
+    with tempfile.TemporaryDirectory(prefix=".grad-diy-", dir=str(dest.parent)) as scratch:
+        stage = Path(scratch) / "project"
+        stage.mkdir(mode=0o700)
+        build(stage)
+        try:
+            stage.rename(dest)
+        except OSError as exc:
+            if exc.errno in (errno.EEXIST, errno.ENOTEMPTY) and is_installed(dest):
+                return dest, False
+            raise
+    return dest, True
+
+
+def main():
+    parser = argparse.ArgumentParser(description="创建一份空白的本地研究生申请项目。")
+    parser.add_argument("--no-chat", action="store_true", help="只建目录，不启动 Codex")
+    parser.add_argument("directory", nargs="?", default=str(Path.home() / "我的研究生申请"))
+    args = parser.parse_args()
+    os.umask(0o077)
+    dest, fresh = install(args.directory)
+    print(("项目已创建：" if fresh else "项目已经存在，保留全部原文件：") + str(dest), flush=True)
+    print("入口：" + str(dest / "先读我.md"), flush=True)
+    if not fresh or args.no_chat:
+        print("本次未启动对话。需要时运行项目中的「启动对话.command」。")
+        return
+    if not (sys.stdin.isatty() and sys.stdout.isatty()):
+        print("没有交互终端，未启动对话。请在终端运行项目中的「启动对话.command」。")
+        return
+    launcher = str(dest / "启动对话.command")
+    os.execl("/bin/sh", "sh", launcher)
+
+
+if __name__ == "__main__":
+    if sys.version_info < (3, 8):
+        sys.exit("请使用 Python 3.8 或更新版本；无须安装第三方包。")
+    try:
+        main()
+    except (OSError, ValueError) as error:
+        sys.exit("安装未完成：" + str(error))

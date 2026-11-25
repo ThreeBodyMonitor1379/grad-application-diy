@@ -1,0 +1,45 @@
+{
+  "skill": "grad-application-follow-up",
+  "version": "1.0.0",
+  "source_book": "港新授课型硕士 DIY 工作流（匿名案例）",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should_trigger-1",
+      "type": "should_trigger",
+      "prompt": "学院群发邮件要中文成绩单；系统已有中英合并件，还要再交一次吗？",
+      "expected_behavior": "对照签发学校、学期、语种及现有附件，确认相符且无新提示则不重复上传，说明不能在线预览的局限。"
+    },
+    {
+      "id": "should_trigger-2",
+      "type": "should_trigger",
+      "prompt": "老师在甲项目的报告显示 received，乙项目只收到邀请。还要催两次吗？",
+      "expected_behavior": "分别记录；甲停止催办，乙只核查该条状态与期限，不代老师操作。"
+    },
+    {
+      "id": "should_trigger-3",
+      "type": "should_trigger",
+      "prompt": "我已发延期邮件，系统仍是旧日期，能按我提议的时间交吗？",
+      "expected_behavior": "查明是否有书面批准和适用对象，不把已发信或提议日期视为获批日期。"
+    },
+    {
+      "id": "should_not_trigger-4",
+      "type": "should_not_trigger",
+      "prompt": "我还没提交，请帮我确定国内和国外两行应填哪些材料。",
+      "expected_behavior": "交材料与网申核对。"
+    },
+    {
+      "id": "should_not_trigger-5",
+      "type": "should_not_trigger",
+      "prompt": "刚收到正式录取信，帮我拆解接受、缴费和最终材料的顺序。",
+      "expected_behavior": "交录取信核对。"
+    },
+    {
+      "id": "edge_case-6",
+      "type": "edge_case",
+      "prompt": "门户超时了。半月前显示老师未交，你能断定现在未交吗？",
+      "expected_behavior": "提供带时点的最后记录和缺口，不当作当前未提交；不重发邀请。"
+    }
+  ],
+  "minimum_pass_rate": 0.8
+}

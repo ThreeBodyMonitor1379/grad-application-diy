@@ -1,0 +1,45 @@
+{
+  "skill": "grad-offer-review",
+  "version": "1.0.0",
+  "source_book": "港新授课型硕士 DIY 工作流（匿名案例）",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should_trigger-1",
+      "type": "should_trigger",
+      "prompt": "原录取信说周三答复，学院说周五前交留位费。能周五再决定吗？",
+      "expected_behavior": "区分答复和缴费两个时钟，先按原信答复，除非学校明确另行延长。"
+    },
+    {
+      "id": "should_trigger-2",
+      "type": "should_trigger",
+      "prompt": "双学籍但录取条件只写 final degree certificate，外方要晚两个月发证。怎么办？",
+      "expected_behavior": "核对条款是否点名哪所学校，梳理双方授位日期，向校方问可接受的文件及补交安排；不承诺延期。"
+    },
+    {
+      "id": "should_trigger-3",
+      "type": "should_trigger",
+      "prompt": "两个项目都录了，留位费能抵学费，但我没看到退款说明。要怎么比较？",
+      "expected_behavior": "列出独立项目费用条款、已知抵扣与未知退款规则，核接受限制；不代选不代付。"
+    },
+    {
+      "id": "should_not_trigger-4",
+      "type": "should_not_trigger",
+      "prompt": "网申显示 under processing，推荐信还缺一封，先处理哪个？",
+      "expected_behavior": "转提交后跟进，不当作录取。"
+    },
+    {
+      "id": "should_not_trigger-5",
+      "type": "should_not_trigger",
+      "prompt": "我还没选学校，想算一下这两个城市的全程预算。",
+      "expected_behavior": "转申请起步与选校。"
+    },
+    {
+      "id": "edge_case-6",
+      "type": "edge_case",
+      "prompt": "收到一条含支付按钮的预览，看不清项目和录取信，能否确认应立即付？",
+      "expected_behavior": "不确认项目或执行付款；要求从独立官方入口核正式信与付款指引。"
+    }
+  ],
+  "minimum_pass_rate": 0.8
+}

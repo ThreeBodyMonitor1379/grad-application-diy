@@ -1,0 +1,41 @@
+{
+  "skill": "grad-application-packet-audit",
+  "test_cases": [
+    {
+      "id": "packet-1",
+      "type": "should_trigger",
+      "prompt": "国内一校一专业，只有百分制，要不要换算？",
+      "expected_behavior": "使用本校量表，不自算。"
+    },
+    {
+      "id": "packet-2",
+      "type": "should_trigger",
+      "prompt": "两所大学都有学籍，乙校没有累计成绩，系统却必填数字。",
+      "expected_behavior": "分卡，不复制甲校，保留草稿询问。"
+    },
+    {
+      "id": "packet-3",
+      "type": "should_trigger",
+      "prompt": "合作课程只有一个联合学位，表单只能录一个资格。",
+      "expected_behavior": "先看字段定义；不造第二学位，询问如何披露合作校。"
+    },
+    {
+      "id": "packet-4",
+      "type": "should_not_trigger",
+      "prompt": "我的推荐人显示邀请发出，算交了没？",
+      "expected_behavior": "走提交后跟进。"
+    },
+    {
+      "id": "packet-5",
+      "type": "should_not_trigger",
+      "prompt": "想知道留位费能不能退。",
+      "expected_behavior": "走录取信核对。"
+    },
+    {
+      "id": "packet-6",
+      "type": "edge_case",
+      "prompt": "出国交流一学期拿到访学证明，该选第二个学位吗？",
+      "expected_behavior": "核对实际就读和成绩转移；不凭交流证明造学位。"
+    }
+  ]
+}

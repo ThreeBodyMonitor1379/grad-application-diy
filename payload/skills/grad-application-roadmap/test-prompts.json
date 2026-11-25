@@ -1,0 +1,45 @@
+{
+  "skill": "grad-application-roadmap",
+  "version": "1.0.0",
+  "source_book": "港新授课型硕士 DIY 工作流（匿名案例）",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should_trigger-1",
+      "type": "should_trigger",
+      "prompt": "第一次打算明年去港新念授课硕士，家庭只给了总预算，我今天先查什么？",
+      "expected_behavior": "用一个当期项目做样例，拆总成本与现金需求，核硬门槛并给今天的一步。"
+    },
+    {
+      "id": "should_trigger-2",
+      "type": "should_trigger",
+      "prompt": "两份课程清单一份重实习一份重研究，我在意就业也想做论文，怎么筛？",
+      "expected_behavior": "按约束和目标比较当期课程与实践安排，确认未披露项，不把官网营销语当机会保证。"
+    },
+    {
+      "id": "should_trigger-3",
+      "type": "should_trigger",
+      "prompt": "我在国内外两校都有学籍，先开材料还是先等网申？",
+      "expected_behavior": "先分清双学籍和授位关系，逐校定位可开证明和周期，把长周期事项提前。"
+    },
+    {
+      "id": "should_not_trigger-4",
+      "type": "should_not_trigger",
+      "prompt": "填表时 awarding institution 和 partner institution 怎样区分？",
+      "expected_behavior": "交给材料与网申核对；不重做选校。"
+    },
+    {
+      "id": "should_not_trigger-5",
+      "type": "should_not_trigger",
+      "prompt": "录取通知和缴费邮件有不同日期，要按哪天？",
+      "expected_behavior": "交给录取信核对。"
+    },
+    {
+      "id": "edge_case-6",
+      "type": "edge_case",
+      "prompt": "该项目只有上一年度轮次，能当作今年官网截止写进去吗？",
+      "expected_behavior": "帮助规划，但标本季未知；旧日仅供复查安排，给当季核验入口。"
+    }
+  ],
+  "minimum_pass_rate": 0.8
+}
